@@ -25,7 +25,7 @@
     align-items:center;
     justify-content:center;
     min-height:100vh;
-    padding:32px;
+    padding:24px;
   }
 
   .container{
@@ -50,22 +50,15 @@
     gap:18px;
   }
 
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
+  .brand{ display:flex; align-items:center; gap:12px; }
   .seal{
-    width:72px;height:72px;border-radius:12px;background:var(--bg-2);display:flex;align-items:center;justify-content:center;color:var(--gov-blue);font-weight:700;font-size:22px;
-    box-shadow: inset 0 -6px 12px rgba(0,0,0,0.06);
+    width:72px;height:72px;border-radius:12px;background:var(--bg-2);
+    display:flex;align-items:center;justify-content:center;color:var(--gov-blue);
+    font-weight:700;font-size:22px; box-shadow: inset 0 -6px 12px rgba(0,0,0,0.06);
   }
 
-  h1.title{
-    margin:0;font-size:22px;letter-spacing:0.2px;
-  }
-  p.sub{
-    margin:0;opacity:0.95;
-  }
+  h1.title{ margin:0;font-size:22px;letter-spacing:0.2px; }
+  p.sub{ margin:0;opacity:0.95; }
 
   .left .info{
     background: rgba(255,255,255,0.06);
@@ -95,9 +88,7 @@
   }
   .btn:disabled{opacity:0.6;cursor:not-allowed}
 
-  .note{
-    font-size:13px;color:#334; margin-top:8px;
-  }
+  .note{ font-size:13px;color:#334; margin-top:8px; }
 
   .success{
     background: linear-gradient(90deg, rgba(48,240,224,0.14), rgba(48,240,224,0.06));
@@ -139,7 +130,13 @@
       </div>
 
       <div>
-        <p style="margin:0.2rem 0 0 0; font-size:13px">UI Colors: <span style="background:var(--gov-blue);padding:6px 8px;border-radius:6px;color:white;margin-left:6px">#003161</span> <span style="background:var(--bg-1);padding:6px 8px;border-radius:6px;margin-left:6px">#F0F0F0</span> <span style="background:var(--bg-2);padding:6px 8px;border-radius:6px;margin-left:6px">#F3F2EC</span> <span style="background:var(--accent);padding:6px 8px;border-radius:6px;margin-left:6px">#30F0E0</span></p>
+        <p style="margin:0.2rem 0 0 0; font-size:13px">
+          UI Colors:
+          <span style="background:var(--gov-blue);padding:6px 8px;border-radius:6px;color:white;margin-left:6px">#003161</span>
+          <span style="background:var(--bg-1);padding:6px 8px;border-radius:6px;margin-left:6px">#F0F0F0</span>
+          <span style="background:var(--bg-2);padding:6px 8px;border-radius:6px;margin-left:6px">#F3F2EC</span>
+          <span style="background:var(--accent);padding:6px 8px;border-radius:6px;margin-left:6px">#30F0E0</span>
+        </p>
         <p style="margin:6px 0 0 0; font-size:12px; opacity:0.9">Designed for quick, government-like register interface.</p>
       </div>
     </div>
@@ -197,13 +194,14 @@
 
 <script>
 /* ------------------------
-  Replace with your Web App URL (from Apps Script deploy)
-  Example: https://script.google.com/macros/s/AKfycbx...../exec
+  आपका Apps Script Web App URL नीचे दिया गया है (जैसा आपने भेजा था).
+  यदि बाद में URL बदलना हो तो बस इस const को update कर दें।
 -------------------------*/
-const GSHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxNz4vYvLDlFpR9bRDW4_6iEP5M16o0pmzHFY3AM2swp3yUX1hJke2AsWB_wx3eEofm5A/exec"; // <-- PUT WEBAPP URL HERE
+const GSHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxNz4vYvLDlFpR9bRDW4_6iEP5M16o0pmzHFY3AM2swp3yUX1hJke2AsWB_wx3eEofm5A/exec";
 
-if (!GSHEET_WEBAPP_URL || GSHEET_WEBAPP_URL.includes("https://script.google.com/macros/s/AKfycbxNz4vYvLDlFpR9bRDW4_6iEP5M16o0pmzHFY3AM2swp3yUX1hJke2AsWB_wx3eEofm5A/exec")) {
-  console.warn("https://script.google.com/macros/s/AKfycbxNz4vYvLDlFpR9bRDW4_6iEP5M16o0pmzHFY3AM2swp3yUX1hJke2AsWB_wx3eEofm5A/exec");
+/* small sanity check */
+if (!GSHEET_WEBAPP_URL || typeof GSHEET_WEBAPP_URL !== "string" || !GSHEET_WEBAPP_URL.startsWith("https://script.google.com/macros/")) {
+  console.warn("GSHEET_WEBAPP_URL seems missing or invalid. Open the HTML and paste your Apps Script webapp URL into GSHEET_WEBAPP_URL.");
 }
 
 /* Form handling */
@@ -213,12 +211,9 @@ const statusMsg = document.getElementById("statusMsg");
 const debug = document.getElementById("debug");
 
 function validatePhone(phone){
-  // basic validation for Indian or international numbers
   const p = phone.trim();
-  // allow +, digits, spaces
   return /^[+\d][\d\s\-]{6,20}$/.test(p);
 }
-
 function validateEmail(email){
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -226,20 +221,21 @@ function validateEmail(email){
 form.addEventListener("submit", async function(e){
   e.preventDefault();
   statusMsg.innerHTML = "";
+  debug.style.display = "none";
   const name = form.name.value.trim();
   const whatsapp = form.whatsapp.value.trim();
   const gender = form.gender.value;
   const email = form.email.value.trim();
   const notes = form.notes.value.trim();
 
-  // basic validation
+  // validation
   if (!name){ alert("Name required"); form.name.focus(); return; }
   if (!whatsapp || !validatePhone(whatsapp)){ alert("Please enter a valid WhatsApp number"); form.whatsapp.focus(); return; }
   if (!gender){ alert("Please select gender"); form.gender.focus(); return; }
   if (!email || !validateEmail(email)){ alert("Please enter a valid email"); form.email.focus(); return; }
 
-  if (!GSHEET_WEBAPP_URL || GSHEET_WEBAPP_URL.includes("https://script.google.com/macros/s/AKfycbxNz4vYvLDlFpR9bRDW4_6iEP5M16o0pmzHFY3AM2swp3yUX1hJke2AsWB_wx3eEofm5A/exec")) {
-    alert("Spreadsheet Web App URL missing. Open the HTML and paste your Apps Script web app URL into GSHEET_WEBAPP_URL.");
+  if (!GSHEET_WEBAPP_URL || !GSHEET_WEBAPP_URL.startsWith("https://script.google.com/macros/")) {
+    alert("Spreadsheet Web App URL missing or invalid. Open the HTML and paste your Apps Script web app URL into GSHEET_WEBAPP_URL.");
     return;
   }
 
@@ -256,14 +252,22 @@ form.addEventListener("submit", async function(e){
       mode: "cors"
     });
 
-    const data = await resp.json();
-    if (data && data.status === "success") {
+    // Try parse response as JSON (Apps Script returns JSON in our setup)
+    let data = null;
+    try { data = await resp.json(); } catch (e) { data = null; }
+
+    if (resp.ok && data && data.status === "success") {
       statusMsg.innerHTML = '<div class="success">Submitted successfully ✅</div>';
       form.reset();
-    } else {
-      statusMsg.innerHTML = '<div style="color:#a33">Submission failed — try again.</div>';
+    } else if (resp.ok && data && data.status === "error") {
+      statusMsg.innerHTML = '<div style="color:#a33">Submission failed: ' + (data.message || "error") + '</div>';
       debug.style.display = "block";
-      debug.textContent = JSON.stringify(data || {status:resp.status}, null, 2);
+      debug.textContent = JSON.stringify(data, null, 2);
+    } else {
+      // fallback error
+      statusMsg.innerHTML = '<div style="color:#a33">Submission failed — server returned status ' + resp.status + '</div>';
+      debug.style.display = "block";
+      debug.textContent = data ? JSON.stringify(data, null, 2) : ('HTTP ' + resp.status + ' - ' + await resp.text());
     }
   } catch(err){
     statusMsg.innerHTML = '<div style="color:#a33">Network error — check console.</div>';
