@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Smart Hackathon - Registration</title>
 <style>
-  /* Color palette */
   :root{
     --gov-blue: #003161;
     --bg-1: #F0F0F0;
@@ -15,7 +14,6 @@
     --max-width: 780px;
     --shadow: 0 6px 18px rgba(0,0,0,0.08);
   }
-
   *{box-sizing:border-box;font-family: "Noto Sans", "Segoe UI", Roboto, sans-serif}
   body{
     margin:0;
@@ -27,7 +25,6 @@
     min-height:100vh;
     padding:24px;
   }
-
   .container{
     width:100%;
     max-width:var(--max-width);
@@ -38,8 +35,6 @@
     display:grid;
     grid-template-columns: 1fr 420px;
   }
-
-  /* left info */
   .left{
     background: linear-gradient(180deg, var(--gov-blue), #072B5C);
     color: white;
@@ -49,28 +44,19 @@
     justify-content:space-between;
     gap:18px;
   }
-
   .brand{ display:flex; align-items:center; gap:12px; }
   .seal{
     width:72px;height:72px;border-radius:12px;background:var(--bg-2);
     display:flex;align-items:center;justify-content:center;color:var(--gov-blue);
     font-weight:700;font-size:22px; box-shadow: inset 0 -6px 12px rgba(0,0,0,0.06);
   }
-
   h1.title{ margin:0;font-size:22px;letter-spacing:0.2px; }
   p.sub{ margin:0;opacity:0.95; }
-
   .left .info{
     background: rgba(255,255,255,0.06);
     padding:12px;border-radius:8px;font-size:13px;
   }
-
-  /* right form */
-  .right{
-    padding:28px;
-    background: linear-gradient(180deg, #fff, var(--bg-2));
-  }
-
+  .right{padding:28px;background: linear-gradient(180deg, #fff, var(--bg-2));}
   form{display:flex;flex-direction:column;gap:12px}
   label{font-size:13px;color:#223;display:block;margin-bottom:6px}
   input[type="text"], input[type="email"], select, textarea{
@@ -80,24 +66,18 @@
   input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus{outline:2px solid rgba(0,49,97,0.08)}
   .row{display:flex;gap:12px}
   .row .col{flex:1}
-
   .btn{
     background:var(--gov-blue);
     color:white;padding:12px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer;
     display:inline-flex;gap:8px;align-items:center;justify-content:center;
   }
   .btn:disabled{opacity:0.6;cursor:not-allowed}
-
   .note{ font-size:13px;color:#334; margin-top:8px; }
-
   .success{
     background: linear-gradient(90deg, rgba(48,240,224,0.14), rgba(48,240,224,0.06));
     border-left:4px solid var(--accent); padding:10px;border-radius:8px;color:#033;
   }
-
   footer.small{font-size:12px; opacity:0.8; margin-top:10px; color:#1b2330}
-
-  /* small screens */
   @media (max-width:880px){
     .container{grid-template-columns:1fr; padding:0}
     .left{order:2}
@@ -107,7 +87,7 @@
 </head>
 <body>
   <div class="container" role="main" aria-labelledby="formTitle">
-    <div class="left" aria-hidden="false">
+    <div class="left">
       <div>
         <div class="brand">
           <div class="seal">SH</div>
@@ -116,9 +96,7 @@
             <p class="sub">Participants' details collection - official format</p>
           </div>
         </div>
-
         <div style="height:14px"></div>
-
         <div class="info">
           <strong>Important:</strong>
           <ul style="margin:8px 0 0 18px;padding:0;">
@@ -128,7 +106,6 @@
           </ul>
         </div>
       </div>
-
       <div>
         <p style="margin:0.2rem 0 0 0; font-size:13px">
           UI Colors:
@@ -150,7 +127,6 @@
           <label for="name">Full Name</label>
           <input id="name" name="name" type="text" placeholder="Your full name" required>
         </div>
-
         <div class="row">
           <div class="col">
             <label for="whatsapp">WhatsApp Number</label>
@@ -167,116 +143,69 @@
             </select>
           </div>
         </div>
-
         <div>
           <label for="email">Email</label>
           <input id="email" name="email" type="email" placeholder="you@example.com" required>
         </div>
-
         <div>
           <label for="notes">Notes (optional)</label>
           <textarea id="notes" name="notes" rows="3" placeholder="College / City / Experience (optional)"></textarea>
         </div>
-
         <div style="display:flex;gap:10px;margin-top:8px;align-items:center">
           <button id="submitBtn" class="btn" type="submit">Submit</button>
           <div id="statusMsg" style="flex:1"></div>
         </div>
-
         <div class="note">Form entries will be saved to your Google Spreadsheet automatically.</div>
         <footer class="small">Made with ♥ for Smart Hackathon</footer>
       </form>
-
       <div style="height:12px"></div>
       <div id="debug" style="display:none;margin-top:10px;font-size:12px;color:#444"></div>
     </div>
   </div>
 
 <script>
-/* ------------------------
-  आपका Apps Script Web App URL नीचे दिया गया है (जैसा आपने भेजा था).
-  यदि बाद में URL बदलना हो तो बस इस const को update कर दें।
--------------------------*/
 const GSHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxNz4vYvLDlFpR9bRDW4_6iEP5M16o0pmzHFY3AM2swp3yUX1hJke2AsWB_wx3eEofm5A/exec";
 
-/* small sanity check */
-if (!GSHEET_WEBAPP_URL || typeof GSHEET_WEBAPP_URL !== "string" || !GSHEET_WEBAPP_URL.startsWith("https://script.google.com/macros/")) {
-  console.warn("GSHEET_WEBAPP_URL seems missing or invalid. Open the HTML and paste your Apps Script webapp URL into GSHEET_WEBAPP_URL.");
-}
-
-/* Form handling */
 const form = document.getElementById("regForm");
 const submitBtn = document.getElementById("submitBtn");
 const statusMsg = document.getElementById("statusMsg");
 const debug = document.getElementById("debug");
 
-function validatePhone(phone){
-  const p = phone.trim();
-  return /^[+\d][\d\s\-]{6,20}$/.test(p);
-}
-function validateEmail(email){
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+function validatePhone(phone){return /^[+\d][\d\s\-]{6,20}$/.test(phone.trim());}
+function validateEmail(email){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);}
 
 form.addEventListener("submit", async function(e){
   e.preventDefault();
-  statusMsg.innerHTML = "";
-  debug.style.display = "none";
-  const name = form.name.value.trim();
-  const whatsapp = form.whatsapp.value.trim();
-  const gender = form.gender.value;
-  const email = form.email.value.trim();
-  const notes = form.notes.value.trim();
+  statusMsg.innerHTML = ""; debug.style.display = "none";
+  const payload = {
+    name: form.name.value.trim(),
+    whatsapp: form.whatsapp.value.trim(),
+    gender: form.gender.value,
+    email: form.email.value.trim(),
+    notes: form.notes.value.trim()
+  };
+  if (!payload.name){ alert("Name required"); return; }
+  if (!payload.whatsapp || !validatePhone(payload.whatsapp)){ alert("Valid WhatsApp required"); return; }
+  if (!payload.gender){ alert("Select gender"); return; }
+  if (!payload.email || !validateEmail(payload.email)){ alert("Valid email required"); return; }
 
-  // validation
-  if (!name){ alert("Name required"); form.name.focus(); return; }
-  if (!whatsapp || !validatePhone(whatsapp)){ alert("Please enter a valid WhatsApp number"); form.whatsapp.focus(); return; }
-  if (!gender){ alert("Please select gender"); form.gender.focus(); return; }
-  if (!email || !validateEmail(email)){ alert("Please enter a valid email"); form.email.focus(); return; }
-
-  if (!GSHEET_WEBAPP_URL || !GSHEET_WEBAPP_URL.startsWith("https://script.google.com/macros/")) {
-    alert("Spreadsheet Web App URL missing or invalid. Open the HTML and paste your Apps Script web app URL into GSHEET_WEBAPP_URL.");
-    return;
-  }
-
-  const payload = { name, whatsapp, gender, email, notes };
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = "Submitting...";
-
+  submitBtn.disabled = true; submitBtn.textContent = "Submitting...";
   try {
     const resp = await fetch(GSHEET_WEBAPP_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-      mode: "cors"
+      method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload), mode:"cors"
     });
-
-    // Try parse response as JSON (Apps Script returns JSON in our setup)
-    let data = null;
-    try { data = await resp.json(); } catch (e) { data = null; }
-
-    if (resp.ok && data && data.status === "success") {
-      statusMsg.innerHTML = '<div class="success">Submitted successfully ✅</div>';
-      form.reset();
-    } else if (resp.ok && data && data.status === "error") {
-      statusMsg.innerHTML = '<div style="color:#a33">Submission failed: ' + (data.message || "error") + '</div>';
-      debug.style.display = "block";
-      debug.textContent = JSON.stringify(data, null, 2);
+    let data=null; try{data=await resp.json()}catch{}
+    if (resp.ok && data && data.status==="success"){
+      statusMsg.innerHTML='<div class="success">Submitted successfully ✅</div>'; form.reset();
     } else {
-      // fallback error
-      statusMsg.innerHTML = '<div style="color:#a33">Submission failed — server returned status ' + resp.status + '</div>';
-      debug.style.display = "block";
-      debug.textContent = data ? JSON.stringify(data, null, 2) : ('HTTP ' + resp.status + ' - ' + await resp.text());
+      statusMsg.innerHTML='<div style="color:#a33">Submission failed</div>';
+      debug.style.display="block"; debug.textContent=JSON.stringify(data||{},null,2);
     }
   } catch(err){
-    statusMsg.innerHTML = '<div style="color:#a33">Network error — check console.</div>';
-    console.error(err);
-    debug.style.display = "block";
-    debug.textContent = err.toString();
+    statusMsg.innerHTML='<div style="color:#a33">Network error — check console.</div>';
+    console.error(err); debug.style.display="block"; debug.textContent=err.toString();
   } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Submit";
+    submitBtn.disabled=false; submitBtn.textContent="Submit";
   }
 });
 </script>
