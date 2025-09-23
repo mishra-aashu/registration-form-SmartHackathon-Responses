@@ -200,10 +200,10 @@
   Replace with your Web App URL (from Apps Script deploy)
   Example: https://script.google.com/macros/s/AKfycbx...../exec
 -------------------------*/
-const GSHEET_WEBAPP_URL = "https://script.google.com/d/1nD_7sZ4Y7l4o_GRI4XSbtrisAbrW9XUs5KBMIx1snkBGSVi5P58Cs0jE/edit?usp=sharing"; // <-- PUT WEBAPP URL HERE
+const GSHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxNz4vYvLDlFpR9bRDW4_6iEP5M16o0pmzHFY3AM2swp3yUX1hJke2AsWB_wx3eEofm5A/exec"; // <-- PUT WEBAPP URL HERE
 
-if (!GSHEET_WEBAPP_URL || GSHEET_WEBAPP_URL.includes("https://script.google.com/d/1nD_7sZ4Y7l4o_GRI4XSbtrisAbrW9XUs5KBMIx1snkBGSVi5P58Cs0jE/edit?usp=sharing")) {
-  console.warn("Please insert your GSHEET_WEBAPP_URL in the HTML file.");
+if (!GSHEET_WEBAPP_URL || GSHEET_WEBAPP_URL.includes("https://script.google.com/macros/s/AKfycbxNz4vYvLDlFpR9bRDW4_6iEP5M16o0pmzHFY3AM2swp3yUX1hJke2AsWB_wx3eEofm5A/exec")) {
+  console.warn("https://script.google.com/macros/s/AKfycbxNz4vYvLDlFpR9bRDW4_6iEP5M16o0pmzHFY3AM2swp3yUX1hJke2AsWB_wx3eEofm5A/exec");
 }
 
 /* Form handling */
@@ -238,7 +238,7 @@ form.addEventListener("submit", async function(e){
   if (!gender){ alert("Please select gender"); form.gender.focus(); return; }
   if (!email || !validateEmail(email)){ alert("Please enter a valid email"); form.email.focus(); return; }
 
-  if (!GSHEET_WEBAPP_URL || GSHEET_WEBAPP_URL.includes("https://script.google.com/d/1nD_7sZ4Y7l4o_GRI4XSbtrisAbrW9XUs5KBMIx1snkBGSVi5P58Cs0jE/edit?usp=sharing")) {
+  if (!GSHEET_WEBAPP_URL || GSHEET_WEBAPP_URL.includes("https://script.google.com/macros/s/AKfycbxNz4vYvLDlFpR9bRDW4_6iEP5M16o0pmzHFY3AM2swp3yUX1hJke2AsWB_wx3eEofm5A/exec")) {
     alert("Spreadsheet Web App URL missing. Open the HTML and paste your Apps Script web app URL into GSHEET_WEBAPP_URL.");
     return;
   }
@@ -249,7 +249,7 @@ form.addEventListener("submit", async function(e){
   submitBtn.textContent = "Submitting...";
 
   try {
-    const resp = await fetch(https://script.google.com/d/1nD_7sZ4Y7l4o_GRI4XSbtrisAbrW9XUs5KBMIx1snkBGSVi5P58Cs0jE/edit?usp=sharing, {
+    const resp = await fetch(GSHEET_WEBAPP_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
