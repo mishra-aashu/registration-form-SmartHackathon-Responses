@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Smart Hackathon - Registration</title>
+<style>
+  /* Color palette */
+  :root{
+    --gov-blue: #003161;
+    --bg-1: #F0F0F0;
+    --bg-2: #F3F2EC;
+    --accent: #30F0E0;
+    --card-radius: 12px;
+    --max-width: 780px;
+    --shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
+
+  *{box-sizing:border-box;font-family: "Noto Sans", "Segoe UI", Roboto, sans-serif}
+  body{
+    margin:0;
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    color: #122;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:32px;
+  }
+
+  .container{
+    width:100%;
+    max-width:var(--max-width);
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow:hidden;
+    display:grid;
+    grid-template-columns: 1fr 420px;
+  }
+
+  /* left info */
+  .left{
+    background: linear-gradient(180deg, var(--gov-blue), #072B5C);
+    color: white;
+    padding:28px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:18px;
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .seal{
+    width:72px;height:72px;border-radius:12px;background:var(--bg-2);display:flex;align-items:center;justify-content:center;color:var(--gov-blue);font-weight:700;font-size:22px;
+    box-shadow: inset 0 -6px 12px rgba(0,0,0,0.06);
+  }
+
+  h1.title{
+    margin:0;font-size:22px;letter-spacing:0.2px;
+  }
+  p.sub{
+    margin:0;opacity:0.95;
+  }
+
+  .left .info{
+    background: rgba(255,255,255,0.06);
+    padding:12px;border-radius:8px;font-size:13px;
+  }
+
+  /* right form */
+  .right{
+    padding:28px;
+    background: linear-gradient(180deg, #fff, var(--bg-2));
+  }
+
+  form{display:flex;flex-direction:column;gap:12px}
+  label{font-size:13px;color:#223;display:block;margin-bottom:6px}
+  input[type="text"], input[type="email"], select, textarea{
+    padding:12px;border-radius:8px;border:1px solid #e6e6e6;background: #fff;
+    font-size:14px;width:100%;
+  }
+  input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus{outline:2px solid rgba(0,49,97,0.08)}
+  .row{display:flex;gap:12px}
+  .row .col{flex:1}
+
+  .btn{
+    background:var(--gov-blue);
+    color:white;padding:12px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer;
+    display:inline-flex;gap:8px;align-items:center;justify-content:center;
+  }
+  .btn:disabled{opacity:0.6;cursor:not-allowed}
+
+  .note{
+    font-size:13px;color:#334; margin-top:8px;
+  }
+
+  .success{
+    background: linear-gradient(90deg, rgba(48,240,224,0.14), rgba(48,240,224,0.06));
+    border-left:4px solid var(--accent); padding:10px;border-radius:8px;color:#033;
+  }
+
+  footer.small{font-size:12px; opacity:0.8; margin-top:10px; color:#1b2330}
+
+  /* small screens */
+  @media (max-width:880px){
+    .container{grid-template-columns:1fr; padding:0}
+    .left{order:2}
+    .right{order:1}
+  }
+</style>
+</head>
+<body>
+  <div class="container" role="main" aria-labelledby="formTitle">
+    <div class="left" aria-hidden="false">
+      <div>
+        <div class="brand">
+          <div class="seal">SH</div>
+          <div>
+            <h1 class="title">Smart Hackathon — Registration</h1>
+            <p class="sub">Participants' details collection - official format</p>
+          </div>
+        </div>
+
+        <div style="height:14px"></div>
+
+        <div class="info">
+          <strong>Important:</strong>
+          <ul style="margin:8px 0 0 18px;padding:0;">
+            <li>WhatsApp number aur Email zaroori hai.</li>
+            <li>Har submission spreadsheet me save ho jayega.</li>
+            <li>Duplicate check nahi hai — agar chahiye to aap script me add kar sakte hain.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <p style="margin:0.2rem 0 0 0; font-size:13px">UI Colors: <span style="background:var(--gov-blue);padding:6px 8px;border-radius:6px;color:white;margin-left:6px">#003161</span> <span style="background:var(--bg-1);padding:6px 8px;border-radius:6px;margin-left:6px">#F0F0F0</span> <span style="background:var(--bg-2);padding:6px 8px;border-radius:6px;margin-left:6px">#F3F2EC</span> <span style="background:var(--accent);padding:6px 8px;border-radius:6px;margin-left:6px">#30F0E0</span></p>
+        <p style="margin:6px 0 0 0; font-size:12px; opacity:0.9">Designed for quick, government-like register interface.</p>
+      </div>
+    </div>
+
+    <div class="right">
+      <h2 id="formTitle" style="margin:0 0 6px 0">Register Now</h2>
+      <p style="margin:0 0 16px 0; color:#3b3b3b">Form bharein — fields minimal rakhhe gaye hain.</p>
+
+      <form id="regForm" autocomplete="off" novalidate>
+        <div>
+          <label for="name">Full Name</label>
+          <input id="name" name="name" type="text" placeholder="Your full name" required>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="whatsapp">WhatsApp Number</label>
+            <input id="whatsapp" name="whatsapp" type="text" placeholder="+91xxxxxxxxxx" required>
+          </div>
+          <div class="col">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+
+        <div>
+          <label for="notes">Notes (optional)</label>
+          <textarea id="notes" name="notes" rows="3" placeholder="College / City / Experience (optional)"></textarea>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:8px;align-items:center">
+          <button id="submitBtn" class="btn" type="submit">Submit</button>
+          <div id="statusMsg" style="flex:1"></div>
+        </div>
+
+        <div class="note">Form entries will be saved to your Google Spreadsheet automatically.</div>
+        <footer class="small">Made with ♥ for Smart Hackathon</footer>
+      </form>
+
+      <div style="height:12px"></div>
+      <div id="debug" style="display:none;margin-top:10px;font-size:12px;color:#444"></div>
+    </div>
+  </div>
+
+<script>
+/* ------------------------
+  Replace with your Web App URL (from Apps Script deploy)
+  Example: https://script.google.com/macros/s/AKfycbx...../exec
+-------------------------*/
+const GSHEET_WEBAPP_URL = "https://script.google.com/d/1nD_7sZ4Y7l4o_GRI4XSbtrisAbrW9XUs5KBMIx1snkBGSVi5P58Cs0jE/edit?usp=sharing"; // <-- PUT WEBAPP URL HERE
+
+if (!GSHEET_WEBAPP_URL || GSHEET_WEBAPP_URL.includes("https://script.google.com/d/1nD_7sZ4Y7l4o_GRI4XSbtrisAbrW9XUs5KBMIx1snkBGSVi5P58Cs0jE/edit?usp=sharing")) {
+  console.warn("Please insert your GSHEET_WEBAPP_URL in the HTML file.");
+}
+
+/* Form handling */
+const form = document.getElementById("regForm");
+const submitBtn = document.getElementById("submitBtn");
+const statusMsg = document.getElementById("statusMsg");
+const debug = document.getElementById("debug");
+
+function validatePhone(phone){
+  // basic validation for Indian or international numbers
+  const p = phone.trim();
+  // allow +, digits, spaces
+  return /^[+\d][\d\s\-]{6,20}$/.test(p);
+}
+
+function validateEmail(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+form.addEventListener("submit", async function(e){
+  e.preventDefault();
+  statusMsg.innerHTML = "";
+  const name = form.name.value.trim();
+  const whatsapp = form.whatsapp.value.trim();
+  const gender = form.gender.value;
+  const email = form.email.value.trim();
+  const notes = form.notes.value.trim();
+
+  // basic validation
+  if (!name){ alert("Name required"); form.name.focus(); return; }
+  if (!whatsapp || !validatePhone(whatsapp)){ alert("Please enter a valid WhatsApp number"); form.whatsapp.focus(); return; }
+  if (!gender){ alert("Please select gender"); form.gender.focus(); return; }
+  if (!email || !validateEmail(email)){ alert("Please enter a valid email"); form.email.focus(); return; }
+
+  if (!GSHEET_WEBAPP_URL || GSHEET_WEBAPP_URL.includes("https://script.google.com/d/1nD_7sZ4Y7l4o_GRI4XSbtrisAbrW9XUs5KBMIx1snkBGSVi5P58Cs0jE/edit?usp=sharing")) {
+    alert("Spreadsheet Web App URL missing. Open the HTML and paste your Apps Script web app URL into GSHEET_WEBAPP_URL.");
+    return;
+  }
+
+  const payload = { name, whatsapp, gender, email, notes };
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting...";
+
+  try {
+    const resp = await fetch(https://script.google.com/d/1nD_7sZ4Y7l4o_GRI4XSbtrisAbrW9XUs5KBMIx1snkBGSVi5P58Cs0jE/edit?usp=sharing, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      mode: "cors"
+    });
+
+    const data = await resp.json();
+    if (data && data.status === "success") {
+      statusMsg.innerHTML = '<div class="success">Submitted successfully ✅</div>';
+      form.reset();
+    } else {
+      statusMsg.innerHTML = '<div style="color:#a33">Submission failed — try again.</div>';
+      debug.style.display = "block";
+      debug.textContent = JSON.stringify(data || {status:resp.status}, null, 2);
+    }
+  } catch(err){
+    statusMsg.innerHTML = '<div style="color:#a33">Network error — check console.</div>';
+    console.error(err);
+    debug.style.display = "block";
+    debug.textContent = err.toString();
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit";
+  }
+});
+</script>
+</body>
+</html>
